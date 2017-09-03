@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>CaptainPav.Images.Optimization.Service.AzureKraken</AssemblyName>
+    <RootNamespace>CaptainPav.Images.Optimization.Service.AzureKraken</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="kraken-net" Version="1.1.6" />
+    <PackageReference Include="WindowsAzure.Storage" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contracts\Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

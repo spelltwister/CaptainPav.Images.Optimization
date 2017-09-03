@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.0</TargetFramework>
+    <AssemblyName>CaptainPav.Images.Optimization.Contracts</AssemblyName>
+    <RootNamespace>CaptainPav.Images.Optimization.Contracts</RootNamespace>
+  </PropertyGroup>
+
+</Project>
