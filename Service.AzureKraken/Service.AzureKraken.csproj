@@ -10,6 +10,7 @@
     <PackageProjectUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization</PackageProjectUrl>
     <RepositoryUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization/blob/master/LICENSE</PackageLicenseUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
