@@ -119,6 +119,8 @@ namespace CaptainPav.Images.Optimization.Service.AzureKraken
             var siteImagesContainer = imagesBlobClient.GetContainerReference(siteId);
             await siteImagesContainer.CreateIfNotExistsAsync().ConfigureAwait(false);
 
+            // TODO: could be optimized to not download bytes when an optimization is not required
+
             var imageBytes = await GetOrSaveImageBytesAsync(siteImagesContainer, siteId, imageUrl, optimizedImageName).ConfigureAwait(false);
             if (imageBytes == null)
             {
@@ -126,28 +128,7 @@ namespace CaptainPav.Images.Optimization.Service.AzureKraken
                 return null;
             }
 
-            // TODO: check for optimized image first, maybe the record just did not get written
-
-            System.Diagnostics.Trace.TraceInformation($"Optimizing `{siteId}` site image `{imageUrl}`.");
-            var optimizedImage = await krakenClient.OptimizeWait(imageBytes.Item2, optimizedImageName,
-                new OptimizeUploadWaitRequest()
-                {
-                    Lossy = true
-                }).ConfigureAwait(false);
-
-            if (!optimizedImage.Success)
-            {
-                throw new InvalidOperationException($"Not able to optimize image `{optimizedImageName}`.  Error: `{optimizedImage.Error}`.");
-            }
-
-            System.Diagnostics.Trace.TraceInformation($"Downloading optimized bytes for `{siteId}` site image `{imageUrl}`.");
-            var lossyBytes = await GetImageBytesAsync(optimizedImage.Body.KrakedUrl).ConfigureAwait(false);
-            System.Diagnostics.Trace.TraceInformation($"Downloaded optimized bytes for `{siteId}` site image `{imageUrl}`.  Unoptimized size: {imageBytes.Item2.Length} bytes, optimized size: {lossyBytes.Length} bytes.");
-
-            System.Diagnostics.Trace.TraceInformation($"Saving optimized bytes for `{siteId}` site image `{imageUrl}`.");
-            var optimizedBlob = siteImagesContainer.GetBlockBlobReference($"aaopt/{optimizedImageName}");
-            await optimizedBlob.UploadFromByteArrayAsync(lossyBytes, 0, lossyBytes.Length).ConfigureAwait(false);
-            System.Diagnostics.Trace.TraceInformation($"Saved optimized bytes for `{siteId}` site image `{imageUrl}`.");
+            var optimizedBlob = await GetOrSaveOptimizedBlobAsync(siteImagesContainer, krakenClient, siteId, imageUrl, optimizedImageName, imageBytes.Item2).ConfigureAwait(false);
 
             ImageRecord newRecord = new ImageRecord()
             {
@@ -220,6 +201,52 @@ namespace CaptainPav.Images.Optimization.Service.AzureKraken
             System.Diagnostics.Trace.TraceInformation($"Copied bytes of `{siteId}` site image `{imageUrl}`.");
 
             return Tuple.Create(copyBlob, imageBytes);
+        }
+
+        protected static async Task<CloudBlockBlob> GetOrSaveOptimizedBlobAsync(CloudBlobContainer siteImagesContainer, Client krakenClient, string siteId, string imageUrl, string optimizedImageName, byte[] imageBytes)
+        {
+            System.Diagnostics.Trace.TraceInformation($"Checking for optimized bytes for `{siteId}` site image `{imageUrl}`.");
+            var optimizedBlob = siteImagesContainer.GetBlockBlobReference($"aaopt/{optimizedImageName}");
+
+            bool optimizeExists = await optimizedBlob.ExistsAsync().ConfigureAwait(false);
+            if (optimizeExists)
+            {
+                System.Diagnostics.Trace.TraceInformation($"Optimized bytes exist for `{siteId}` site image `{imageUrl}`.");
+                await optimizedBlob.FetchAttributesAsync().ConfigureAwait(false);
+                System.Diagnostics.Trace.TraceInformation($"Optimized bytes exist for `{siteId}` site image `{imageUrl}` with size {optimizedBlob.Properties.Length:D}.");
+                optimizeExists = optimizedBlob.Properties.Length > 0;
+            }
+
+            if (!optimizeExists)
+            {
+                System.Diagnostics.Trace.TraceInformation($"Optimized bytes do not exist for `{siteId}` site image `{imageUrl}`.");
+
+                System.Diagnostics.Trace.TraceInformation($"Optimizing `{siteId}` site image `{imageUrl}`.");
+                var optimizedImage = await krakenClient.OptimizeWait(imageBytes, optimizedImageName,
+                    new OptimizeUploadWaitRequest()
+                    {
+                        Lossy = true
+                    }).ConfigureAwait(false);
+
+                if (!optimizedImage.Success)
+                {
+                    throw new InvalidOperationException($"Not able to optimize image `{optimizedImageName}`.  Error: `{optimizedImage.Error}`.");
+                }
+
+                System.Diagnostics.Trace.TraceInformation($"Downloading optimized bytes for `{siteId}` site image `{imageUrl}`.");
+                var lossyBytes = await GetImageBytesAsync(optimizedImage.Body.KrakedUrl).ConfigureAwait(false);
+                System.Diagnostics.Trace.TraceInformation($"Downloaded optimized bytes for `{siteId}` site image `{imageUrl}`.  Unoptimized size: {imageBytes.Length} bytes, optimized size: {lossyBytes.Length} bytes.");
+
+                System.Diagnostics.Trace.TraceInformation($"Saving optimized bytes for `{siteId}` site image `{imageUrl}`.");
+                await optimizedBlob.UploadFromByteArrayAsync(lossyBytes, 0, lossyBytes.Length).ConfigureAwait(false);
+                System.Diagnostics.Trace.TraceInformation($"Saved optimized bytes for `{siteId}` site image `{imageUrl}`.");
+            }
+            else
+            {
+                System.Diagnostics.Trace.TraceInformation($"Using existing optimized bytes for `{siteId}` site image `{imageUrl}`.");
+            }
+
+            return optimizedBlob;
         }
     }
 }
