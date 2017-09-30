@@ -35,5 +35,16 @@ namespace CaptainPav.Images.Optimization.Contracts
         /// The image record for the given site image
         /// </returns>
         Task<IImageRecord> GetOrSaveRowAsync(string siteId, string imageUrl, string optimziedImageName);
+
+        /// <summary>
+        /// Gets the optimized bytes for the given image record
+        /// </summary>
+        /// <param name="record">
+        /// The record for which to get the optimized bytes
+        /// </param>
+        /// <returns>
+        /// The optimized bytes for the given image record
+        /// </returns>
+        Task<byte[]> GetOptimizedBytesAsync(IImageRecord record);
     }
 }

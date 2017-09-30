@@ -1,7 +1,7 @@
 ﻿using CaptainPav.Images.Optimization.Contracts;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace CaptainPav.Images.Optimization.Service.AzureKraken
+namespace CaptainPav.Images.Optimization.Service
 {
     public class ImageRecord : TableEntity, IImageRecord
     {

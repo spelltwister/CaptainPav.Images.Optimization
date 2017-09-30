@@ -6,21 +6,22 @@
     <RootNamespace>CaptainPav.Images.Optimization.Service.AzureKraken</RootNamespace>
     <Authors>Michael Pavlak</Authors>
     <Company>Visual Chimera, LLC</Company>
-    <Description>Library to manage importing images into azure storage and optimizing them using the Kraken Image Optimizer.</Description>
+    <Description>Implementation of the optimization service using the Kraken Image Optimizer.</Description>
     <PackageProjectUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization</PackageProjectUrl>
     <RepositoryUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization/blob/master/LICENSE</PackageLicenseUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
+    <Copyright>Michael Pavlak</Copyright>
+    <PackageTags>Kraken IO</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="kraken-net" Version="1.1.6" />
-    <PackageReference Include="WindowsAzure.Storage" Version="8.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj" />
+    <ProjectReference Include="..\Service\Service.csproj" />
   </ItemGroup>
 
 </Project>

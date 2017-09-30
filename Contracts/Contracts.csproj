@@ -7,13 +7,14 @@
     <Company>Visual Chimera, LLC</Company>
     <Authors>Michael Pavlak</Authors>
     <Description>Contracts used to manage importing and optimizing images.</Description>
-    <Copyright />
+    <Copyright>Michael Pavlak</Copyright>
     <PackageProjectUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization</PackageProjectUrl>
     <RepositoryUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization</RepositoryUrl>
-    <PackageTags>Kraken, Azure Storage, Image Optimization</PackageTags>
+    <PackageTags>Image Optimization</PackageTags>
     <PackageReleaseNotes />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization/blob/master/LICENSE</PackageLicenseUrl>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
 </Project>

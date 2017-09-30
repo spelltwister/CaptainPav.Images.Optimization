@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace CaptainPav.Images.Optimization.Service.AzureKraken
+namespace CaptainPav.Images.Optimization.Service
 {
     public static class StringExtensions
     {

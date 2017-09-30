@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <AssemblyName>CaptainPav.Images.Optimization.Service</AssemblyName>
+    <RootNamespace>CaptainPav.Images.Optimization.Service</RootNamespace>
+    <Version>1.2.0</Version>
+    <Authors>Michael Pavlak</Authors>
+    <Company>Visual Chimera, LLC</Company>
+    <Description>Implementation of the optimization service utilizing azure storage and an abstract optimization service.</Description>
+    <Copyright>Michael Pavlak</Copyright>
+    <PackageLicenseUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization</RepositoryUrl>
+    <PackageTags>Azure Storage, Image Optimization</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
+    <PackageReference Include="WindowsAzure.Storage" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contracts\Contracts.csproj" />
+  </ItemGroup>
+
+</Project>
