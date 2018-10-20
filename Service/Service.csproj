@@ -13,6 +13,7 @@
     <PackageProjectUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization</PackageProjectUrl>
     <RepositoryUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization</RepositoryUrl>
     <PackageTags>Azure Storage, Image Optimization</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
