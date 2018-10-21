@@ -4,7 +4,7 @@
     <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>CaptainPav.Images.Optimization.Service</AssemblyName>
     <RootNamespace>CaptainPav.Images.Optimization.Service</RootNamespace>
-    <Version>1.2.0</Version>
+    <Version>1.3.0</Version>
     <Authors>Michael Pavlak</Authors>
     <Company>Visual Chimera, LLC</Company>
     <Description>Implementation of the optimization service utilizing azure storage and an abstract optimization service.</Description>
@@ -14,6 +14,7 @@
     <RepositoryUrl>https://github.com/spelltwister/CaptainPav.Images.Optimization</RepositoryUrl>
     <PackageTags>Azure Storage, Image Optimization</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <FileVersion>1.3.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

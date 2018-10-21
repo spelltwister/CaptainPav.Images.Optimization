@@ -37,5 +37,10 @@ namespace CaptainPav.Images.Optimization.Service
         /// Gets or sets the url of the optimized image
         /// </summary>
         public string OptimizedImageUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image name part which may include '/' characters
+        /// </summary>
+        public string ImageName { get; set; }
     }
 }

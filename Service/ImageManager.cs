@@ -98,8 +98,7 @@ namespace CaptainPav.Images.Optimization.Service
                 throw new ArgumentException("No images for the given site id.");
             }
 
-            string optimizedBlobName = record.OptimizedImageUrl.Substring(record.OptimizedImageUrl.IndexOf(OptimizedFolderPrefix, StringComparison.Ordinal) + OptimizedFolderPrefix.Length);
-            var optimizedBlob = siteImagesContainer.GetBlockBlobReference(optimizedBlobName);
+            var optimizedBlob = siteImagesContainer.GetBlockBlobReference($"{OptimizedFolderPrefix}{record.ImageName}");
             if (!await optimizedBlob.ExistsAsync().ConfigureAwait(false))
             {
                 throw new ArgumentException("No image matching the record.");
@@ -169,7 +168,8 @@ namespace CaptainPav.Images.Optimization.Service
                 SiteId = siteId,
                 ImageUrl = imageUrl,
                 ImageLocalCopyUrl = imageBytes.Item1.Uri.AbsoluteUri,
-                OptimizedImageUrl = optimizedBlob.Uri.AbsoluteUri
+                OptimizedImageUrl = optimizedBlob.Uri.AbsoluteUri,
+                ImageName = optimizedImageName
             };
 
             System.Diagnostics.Trace.TraceInformation($"Creating image record for `{siteId}` site image `{imageUrl}` original copy `{newRecord.ImageLocalCopyUrl}` optimized copy `{newRecord.OptimizedImageUrl}`.");
