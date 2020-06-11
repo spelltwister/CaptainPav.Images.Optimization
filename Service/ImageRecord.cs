@@ -1,5 +1,5 @@
 ﻿using CaptainPav.Images.Optimization.Contracts;
-using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.Azure.Cosmos.Table;
 
 namespace CaptainPav.Images.Optimization.Service
 {

@@ -2,9 +2,8 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using CaptainPav.Images.Optimization.Contracts;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage.Table;
+using Microsoft.Azure.Cosmos.Table;
+using Microsoft.Azure.Storage.Blob;
 
 namespace CaptainPav.Images.Optimization.Service
 {
@@ -37,7 +36,7 @@ namespace CaptainPav.Images.Optimization.Service
         /// <summary>
         /// Creates an image manager along with storage dependencies, if needed
         /// </summary>
-        /// <param name="imageStorageAccount">
+        /// <param name="tableStorageAccount">
         /// The storage account used to save original and optimized images
         /// </param>
         /// <param name="imageTableName">
@@ -48,12 +47,12 @@ namespace CaptainPav.Images.Optimization.Service
         /// The image optimizer used to optimize images
         /// </param>
         /// <returns></returns>
-        public static async Task<ImageManager> CreateAsync(CloudStorageAccount imageStorageAccount, string imageTableName, IImageOptimizer optimizer)
+        public static async Task<ImageManager> CreateAsync(CloudStorageAccount tableStorageAccount, Microsoft.Azure.Storage.CloudStorageAccount blobStorageAccount, string imageTableName, IImageOptimizer optimizer)
         {
-            var tableClient = imageStorageAccount.CreateCloudTableClient();
+            var tableClient = tableStorageAccount.CreateCloudTableClient();
             var table = tableClient.GetTableReference(imageTableName);
             await table.CreateIfNotExistsAsync().ConfigureAwait(false);
-            return new ImageManager(table, imageStorageAccount.CreateCloudBlobClient(), optimizer);
+            return new ImageManager(table, blobStorageAccount.CreateCloudBlobClient(), optimizer);
         }
 
         /// <summary>
