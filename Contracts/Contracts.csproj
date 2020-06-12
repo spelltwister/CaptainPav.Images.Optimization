@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard1.0;netstandard2.0;netstandard2.1</TargetFrameworks>
     <AssemblyName>CaptainPav.Images.Optimization.Contracts</AssemblyName>
     <RootNamespace>CaptainPav.Images.Optimization.Contracts</RootNamespace>
     <Company>Visual Chimera, LLC</Company>
